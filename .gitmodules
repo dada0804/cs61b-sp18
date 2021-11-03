@@ -1,0 +1,3 @@
+[submodule "library-sp18/library-sp19"]
+	path = library-sp18/library-sp19
+	url = https://github.com/Berkeley-CS61B/library-sp19

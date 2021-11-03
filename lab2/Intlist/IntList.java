@@ -52,7 +52,7 @@ public class IntList {
             return null;
         }
         IntList res = new IntList(L.first * L.first, null);
-        IntList ptr = res;
+        IntList ptr = res; //create a pointer
         L = L.rest;
         while (L != null) {
             ptr.rest = new IntList(L.first * L.first, null);
@@ -82,6 +82,7 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
+
         return null;
     }
 
@@ -91,8 +92,12 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null){
+            return B;}
+        return new IntList(A.first, catenate(A.rest, B));
     }
+
+
 
 
 
