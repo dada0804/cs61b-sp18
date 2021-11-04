@@ -32,7 +32,7 @@ public class LinkedListDeque<T>{
 
     /* Returns true if deque is empty, false otherwise.*/
     public boolean isEmpty(){
-        return sentinel.next == sentinel;
+        return size == 0;
     }
 
     /* Returns the number of items in the deque.*/
@@ -58,12 +58,11 @@ public class LinkedListDeque<T>{
         if (isEmpty()){
             return null;
         }
-
-        T first = sentinel.next.item;
+        T first = get(0);
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel.next;
-
-        return first;
+        size -= 1;
+        return first ;
     }
 
     /* Removes and returns the item at the back of the deque.
@@ -72,11 +71,10 @@ public class LinkedListDeque<T>{
         if (isEmpty()){
             return null;
         }
-
-        T last = sentinel.prev.item;
+        T last = get(size-1);
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel.prev;
-
+        size -= 1;
         return last;
 
     }
@@ -86,10 +84,10 @@ public class LinkedListDeque<T>{
     /* iteration */
 
     public T get(int index){
-        if (isEmpty()){
+        if (isEmpty() | index >= size){
             return null;
         }
-        IntNode p = sentinel;
+        IntNode p = sentinel.next;
         int x = 0;
         while (p.next != null){
             if (x == index){
@@ -99,6 +97,7 @@ public class LinkedListDeque<T>{
             x += 1;
         }
         return null;
+
     }
 
 
