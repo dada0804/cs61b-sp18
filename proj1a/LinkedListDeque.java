@@ -20,12 +20,14 @@ public class LinkedListDeque<T>{
     /* Adds an item of type T to the front of the deque. */
     public void addFirst(T item){
         sentinel.next = new IntNode(sentinel, item, sentinel.next);
+        sentinel.next.next.prev = sentinel.next;
         size += 1;
     }
 
     /* Adds an item of type T to the back of the deque. */
     public void addLast(T item){
         sentinel.prev = new IntNode(sentinel.prev, item, sentinel);
+        sentinel.prev.prev.next = sentinel.prev;
         size+= 1;
     }
 
@@ -45,8 +47,8 @@ public class LinkedListDeque<T>{
     Once all the items have been printed, print out a new line.*/
     public void printDeque(){
         IntNode p = sentinel.next;
-        while (p.next != sentinel){
-            System.out.print(p.next.item);
+        while (p != sentinel){
+            System.out.print(p.item);
             p = p.next;
         }
         System.out.println();
@@ -125,17 +127,26 @@ public class LinkedListDeque<T>{
 
     /* Creates a deep copy of other
       A walkthrough that provides a solution for this copy constructor is available at https://www.youtube.com/watch?v=JNroRiEG7U4)*/
-    public LinkedListDeque(LinkedListDeque other){
-        sentinel = new IntNode(null,null,null);
+    public LinkedListDeque(LinkedListDeque other) {
+        sentinel = new IntNode(null, null, null);
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;
 
-        for (int i = 0; i < other.size(); i += 1){
+        for (int i = 0; i < other.size(); i += 1) {
             addLast((T) other.get(i));
         }
+    }
+//    public static void main(String[] args){
+//        LinkedListDeque<Integer> lld = new LinkedListDeque<Integer>();
+//        lld.addFirst(1);
+//        lld.addFirst(2);
+//        lld.addLast(5);
+//        lld.printDeque();
+//        System.out.println(lld.getRecursive(2));
+//        System.out.println(lld.size);
+//    }
 
     }
 
 
-}
