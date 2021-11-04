@@ -19,13 +19,13 @@ public class LinkedListDeque<T>{
      Constant time */
     /* Adds an item of type T to the front of the deque. */
     public void addFirst(T item){
-        sentinel.next = new IntNode(sentinel.next, item, sentinel.next.prev);
+        sentinel.next = new IntNode(sentinel, item, sentinel.next);
         size += 1;
     }
 
     /* Adds an item of type T to the back of the deque. */
     public void addLast(T item){
-        sentinel.prev = new IntNode(sentinel.prev.next, item, sentinel.prev);
+        sentinel.prev = new IntNode(sentinel.prev, item, sentinel);
         size+= 1;
     }
 
@@ -60,7 +60,7 @@ public class LinkedListDeque<T>{
         }
         T first = get(0);
         sentinel.next = sentinel.next.next;
-        sentinel.next.prev = sentinel.next;
+        sentinel.next.prev = sentinel;
         size -= 1;
         return first ;
     }
@@ -73,7 +73,7 @@ public class LinkedListDeque<T>{
         }
         T last = get(size-1);
         sentinel.prev = sentinel.prev.prev;
-        sentinel.prev.next = sentinel.prev;
+        sentinel.prev.next = sentinel;
         size -= 1;
         return last;
 
