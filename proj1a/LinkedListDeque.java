@@ -84,14 +84,14 @@ public class LinkedListDeque<T>{
     /* iteration */
 
     public T get(int index){
-        if (isEmpty() | index >= size){
+        if (isEmpty()){
             return null;
         }
         IntNode p = sentinel.next;
         int x = 0;
         while (p.next != null){
             if (x == index){
-                return p.next.item;
+                return p.item;
             }
             p = p.next;
             x += 1;
@@ -104,13 +104,13 @@ public class LinkedListDeque<T>{
     /* recursion */
     private T getR(IntNode p, int index){
         if (index == 0){
-            return p.next.item;
+            return p.item;
         }
         return getR(p.next, index-1);
     }
 
     public T getRecursive(int index){
-        return getR(sentinel, index);
+        return getR(sentinel.next, index);
 
     }
 
