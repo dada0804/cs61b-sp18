@@ -115,25 +115,25 @@ public class ArrayDeque<T>{
 //        }
 //    }
 
-    public static void main(String[] args){
-        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
-        lld.addFirst(1);
-        lld.addFirst(2);
-        lld.addLast(5);
-        lld.addLast(50);
-        lld.addLast(4);
-        lld.addFirst(23);
-        lld.addFirst(34);
-        lld.addFirst(48);
-//        lld.addLast(100);
-        lld.printDeque();
-//        lld.addLast(12);
-//        lld.addLast(90);
+//    public static void main(String[] args){
+//        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
+//        lld.addFirst(1);
+//        lld.addFirst(2);
+//        lld.addLast(5);
+//        lld.addLast(50);
+//        lld.addLast(4);
+//        lld.addFirst(23);
+//        lld.addFirst(34);
+//        lld.addFirst(48);
+////        lld.addLast(100);
 //        lld.printDeque();
-        System.out.println(lld.removeLast());
-        System.out.println(lld.get(5));
-        System.out.println(lld.size);
-    }
+////        lld.addLast(12);
+////        lld.addLast(90);
+////        lld.printDeque();
+//        System.out.println(lld.removeLast());
+//        System.out.println(lld.get(5));
+//        System.out.println(lld.size);
+//    }
 
 }
 
