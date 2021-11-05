@@ -82,7 +82,7 @@ public class ArrayDeque<T>{
     /* Removes and returns the item at the front of the deque.
     If no such item exists, returns null.*/
     public T removeFirst(){
-        T first = items[nextFirst + 1];
+        T first = items[addOne(nextFirst)];
         nextFirst = addOne(nextFirst);
         items[nextFirst] = null;
         size -= 1;
@@ -92,7 +92,7 @@ public class ArrayDeque<T>{
     /* Removes and returns the item at the back of the deque.
     If no such item exists, returns null.*/
     public T removeLast(){
-        T last = items[nextLast - 1];
+        T last = items[minusOne(nextLast)];
         nextLast = minusOne(nextLast);
         items[nextLast] = null;
         size -= 1;
@@ -120,16 +120,21 @@ public class ArrayDeque<T>{
     public static void main(String[] args){
         ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
         lld.addLast(0);
-        lld.addFirst(1);
-        System.out.println(lld.size());
-        lld.addFirst(3);
-        System.out.println(lld.size());
+        lld.addLast(1);
+        System.out.println(lld.removeFirst());
+        System.out.println(lld.get(0));
+
+        lld.addLast(4);
         lld.addLast(5);
         lld.addLast(6);
+
         lld.addLast(7);
-        lld.addLast(8);
-//        lld.addFirst(23);
-//        lld.addFirst(34);
+        lld.addFirst(8);
+        lld.printDeque();
+
+        lld.addFirst(9);
+        System.out.println(lld.removeFirst());
+
 //        lld.addFirst(44);
 //        lld.addFirst(68);
 //        lld.addFirst(48);
