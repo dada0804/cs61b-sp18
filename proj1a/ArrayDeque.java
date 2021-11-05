@@ -37,6 +37,13 @@ public class ArrayDeque<T>{
         nextFirst = 0;
         nextLast = size + 1;
     }
+
+    public void downsize(int capacity){
+        T[] a = (T[]) new Object [capacity*2];
+        System.arraycopy(items, 0, a, 0, capacity*2);
+        items = a;
+    }
+
     public void addFirst(T item){
         if (size == items.length -2){
             resize(size * 2);
@@ -82,20 +89,32 @@ public class ArrayDeque<T>{
     /* Removes and returns the item at the front of the deque.
     If no such item exists, returns null.*/
     public T removeFirst(){
+        if (isEmpty()){
+            return null;
+        }
         T first = items[addOne(nextFirst)];
         nextFirst = addOne(nextFirst);
         items[nextFirst] = null;
         size -= 1;
+        if (items.length/(size+2) >3){
+            downsize(size+2);
+        }
         return first;
     }
 
     /* Removes and returns the item at the back of the deque.
     If no such item exists, returns null.*/
     public T removeLast(){
+        if (isEmpty()){
+            return null;
+        }
         T last = items[minusOne(nextLast)];
         nextLast = minusOne(nextLast);
         items[nextLast] = null;
         size -= 1;
+        if (items.length/(size+2) >3){
+            downsize(size+2);
+        }
         return last;
     }
 
@@ -119,7 +138,7 @@ public class ArrayDeque<T>{
         ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
         lld.addLast(0);
         lld.addLast(1);
-        System.out.println(lld.removeFirst());
+        lld.removeFirst();
         System.out.println(lld.get(0));
 
         lld.addLast(4);
@@ -131,7 +150,15 @@ public class ArrayDeque<T>{
         lld.printDeque();
 
         lld.addFirst(9);
-        System.out.println(lld.removeFirst());
+        lld.removeFirst();
+        lld.removeFirst();
+        lld.removeLast();
+
+        lld.removeFirst();
+        lld.removeLast();
+        lld.removeLast();
+
+
 
 //        lld.addFirst(44);
 //        lld.addFirst(68);
@@ -144,7 +171,6 @@ public class ArrayDeque<T>{
 //        lld.addFirst(40);
 //        lld.addLast(100);
         lld.printDeque();
-        System.out.println(lld.get(5));
 //        lld.addLast(12);
 //        lld.addLast(90);
 //        lld.printDeque();
