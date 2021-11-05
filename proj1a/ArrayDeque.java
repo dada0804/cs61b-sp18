@@ -29,8 +29,10 @@ public class ArrayDeque<T>{
 
     public void resize(int capacity){
         T[] a = (T[]) new Object [capacity];
+
         System.arraycopy(items,nextFirst,a,0, items.length-nextFirst);
-        System.arraycopy(items,0,a,items.length-nextFirst,nextLast);
+        if (nextFirst > 0){
+            System.arraycopy(items,0,a,items.length-nextFirst,nextLast);}
         items = a;
         nextFirst = 0;
         nextLast = size + 1;
@@ -115,25 +117,37 @@ public class ArrayDeque<T>{
 //        }
 //    }
 
-//    public static void main(String[] args){
-//        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
-//        lld.addFirst(1);
-//        lld.addFirst(2);
-//        lld.addLast(5);
-//        lld.addLast(50);
-//        lld.addLast(4);
+    public static void main(String[] args){
+        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
+        lld.addLast(0);
+        lld.addFirst(1);
+        System.out.println(lld.size());
+        lld.addFirst(3);
+        System.out.println(lld.size());
+        lld.addLast(5);
+        lld.addLast(6);
+        lld.addLast(7);
+        lld.addLast(8);
 //        lld.addFirst(23);
 //        lld.addFirst(34);
+//        lld.addFirst(44);
+//        lld.addFirst(68);
 //        lld.addFirst(48);
-////        lld.addLast(100);
+//        lld.addFirst(41);
+//        lld.addFirst(38);
+//        lld.addLast(78);
+//        lld.addFirst(49);
+//        lld.addFirst(58);
+//        lld.addFirst(40);
+//        lld.addLast(100);
+        lld.printDeque();
+//        lld.addLast(12);
+//        lld.addLast(90);
 //        lld.printDeque();
-////        lld.addLast(12);
-////        lld.addLast(90);
-////        lld.printDeque();
 //        System.out.println(lld.removeLast());
 //        System.out.println(lld.get(5));
 //        System.out.println(lld.size);
-//    }
+    }
 
 }
 
