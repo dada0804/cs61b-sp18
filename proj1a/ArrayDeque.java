@@ -51,7 +51,7 @@ public class ArrayDeque<T> {
 
     public void addFirst(T item) {
         if (size == items.length - 2) {
-            resize(size * 2);
+            resize((size+2) * 2);
         }
         items[nextFirst] = item;
         nextFirst = minusOne(nextFirst);
@@ -62,7 +62,7 @@ public class ArrayDeque<T> {
     /* Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
         if (size == items.length - 2) {
-            resize(size * 2);
+            resize((size+2) * 2);
         }
         items[nextLast] = item;
         nextLast = addOne(nextLast);
@@ -128,7 +128,7 @@ public class ArrayDeque<T> {
     /* iteration */
 
     public T get(int index) {
-        return items[(nextFirst + index + 1) % items.length];
+        return items[addOne(nextFirst + index ) ];
 
     }
 
@@ -142,26 +142,23 @@ public class ArrayDeque<T> {
     public static void main(String[] args) {
         ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
         lld.addLast(0);
-        lld.addLast(1);
-        lld.removeFirst();
-        System.out.println(lld.get(0));
+        lld.removeLast();
+        lld.addLast(2);
+        lld.removeLast();
 
         lld.addLast(4);
         lld.addLast(5);
         lld.addLast(6);
 
-        lld.addLast(7);
-        lld.addFirst(8);
-        lld.printDeque();
-
-        lld.addFirst(9);
-        lld.removeFirst();
-        lld.removeFirst();
+        lld.removeLast();
         lld.removeLast();
 
+        lld.addLast(9);
+        lld.addFirst(10);
+        lld.addFirst(11);
+        lld.addLast(12);
         lld.removeFirst();
-        lld.removeLast();
-        lld.removeLast();
+//        System.out.println(lld.removeFirst());
 
         lld.printDeque();
 
