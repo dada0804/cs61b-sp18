@@ -110,12 +110,10 @@ public class ArrayDeque<T>{
 
     /* Creates a deep copy of other
       A walkthrough that provides a solution for this copy constructor is available at https://www.youtube.com/watch?v=JNroRiEG7U4)*/
-//    public ArrayDeque(ArrayDeque other) {
-//
-//        for (int i = 0; i < other.size(); i += 1) {
-//            addLast((T) other.get(i));
-//        }
-//    }
+    public ArrayDeque(ArrayDeque other) {
+        T[] items = (T[]) new Object[other.items.length];
+        System.arraycopy(other, 0, items, 0, items.length);
+    }
 
     public static void main(String[] args){
         ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
@@ -146,6 +144,7 @@ public class ArrayDeque<T>{
 //        lld.addFirst(40);
 //        lld.addLast(100);
         lld.printDeque();
+        System.out.println(lld.get(5));
 //        lld.addLast(12);
 //        lld.addLast(90);
 //        lld.printDeque();
