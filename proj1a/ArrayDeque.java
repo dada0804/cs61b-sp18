@@ -16,10 +16,7 @@ public class ArrayDeque<T> {
     /* Adds an item of type T to the front of the deque. */
     private int minusOne(int index) {
         index -= 1;
-        if (index < 0) {
-            index = items.length + index;
-        }
-        return index;
+        return (index+items.length) % items.length;
     }
 
     private int addOne(int index) {
@@ -40,9 +37,13 @@ public class ArrayDeque<T> {
     }
 
     private void downsize(int capacity) {
-        T[] a = (T[]) new Object[capacity*2];
-
-        System.arraycopy(items, nextFirst, a, 0, size+1);
+        T[] a = (T[]) new Object[capacity * 2];
+        if (nextFirst > nextLast) {
+            System.arraycopy(items, nextFirst, a, 0, items.length - nextFirst);
+            System.arraycopy(items, 0, a, items.length - nextFirst, nextLast);
+        } else {
+            System.arraycopy(items, nextFirst, a, 0, size + 1);
+        }
         items = a;
         nextFirst = 0;
         nextLast = size + 1;
@@ -51,7 +52,7 @@ public class ArrayDeque<T> {
 
     public void addFirst(T item) {
         if (size == items.length - 2) {
-            resize((size+2) * 2);
+            resize((items.length) * 2);
         }
         items[nextFirst] = item;
         nextFirst = minusOne(nextFirst);
@@ -62,7 +63,7 @@ public class ArrayDeque<T> {
     /* Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
         if (size == items.length - 2) {
-            resize((size+2) * 2);
+            resize((items.length) * 2);
         }
         items[nextLast] = item;
         nextLast = addOne(nextLast);
@@ -84,8 +85,8 @@ public class ArrayDeque<T> {
     /* Prints the items in the deque from first to last, separated by a space.
     Once all the items have been printed, print out a new line.*/
     public void printDeque() {
-        for (int i = addOne(nextFirst); i < addOne(nextFirst) + size; i += 1) {
-            System.out.print(items[i % items.length] + " ");
+        for (int i = nextFirst; i < nextFirst+ size; i += 1) {
+            System.out.print(items[addOne(i)] + " ");
         }
         System.out.println();
 
@@ -128,41 +129,45 @@ public class ArrayDeque<T> {
     /* iteration */
 
     public T get(int index) {
-        return items[addOne(nextFirst + index ) ];
+        return items[addOne(nextFirst + index)];
 
     }
 
     /* Creates a deep copy of other
       A walkthrough that provides a solution for this copy constructor is available at https://www.youtube.com/watch?v=JNroRiEG7U4)*/
-    public ArrayDeque(ArrayDeque other) {
-        T[] items = (T[]) new Object[other.items.length];
-        System.arraycopy(other, 0, items, 0, items.length);
-    }
+//    public ArrayDeque(ArrayDeque other) {
+//        T[] items = (T[]) new Object[other.items.length];
+//        System.arraycopy(other, 0, items, 0, items.length);
+//    }
 
-    public static void main(String[] args) {
-        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
-        lld.addLast(0);
-        lld.removeLast();
-        lld.addLast(2);
-        lld.removeLast();
-
-        lld.addLast(4);
-        lld.addLast(5);
-        lld.addLast(6);
-
-        lld.removeLast();
-        lld.removeLast();
-
-        lld.addLast(9);
-        lld.addFirst(10);
-        lld.addFirst(11);
-        lld.addLast(12);
-        lld.removeFirst();
-//        System.out.println(lld.removeFirst());
-
-        lld.printDeque();
-
-    }
+//    public static void main(String[] args) {
+//        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
+//        lld.addFirst(0);
+//        lld.addLast(1);
+//        lld.removeFirst();
+//        lld.removeFirst();
+//
+//        lld.addLast(4);
+//        lld.addLast(5);
+//        lld.addFirst(6);
+//        System.out.println(lld.get(0));
+//        lld.addFirst(8);
+//        lld.addLast(9);
+//        lld.addLast(10);
+//        lld.addFirst(11);
+//        lld.printDeque();
+//
+//        System.out.println(lld.get(3));
+//        lld.removeLast();
+//        lld.addLast(14);
+//        lld.removeLast();
+//        System.out.println(lld.get(4));
+//        lld.removeLast();
+//        lld.removeLast();
+//        lld.addFirst(19);
+//        lld.removeFirst();
+//        System.out.println(lld.removeLast());
+//    }
 
 }
 

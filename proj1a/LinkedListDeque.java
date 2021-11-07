@@ -127,16 +127,16 @@ public class LinkedListDeque<T> {
 
     /* Creates a deep copy of other
       A walkthrough that provides a solution for this copy constructor is available at https://www.youtube.com/watch?v=JNroRiEG7U4)*/
-    public LinkedListDeque(LinkedListDeque other) {
-        sentinel = new IntNode(null, null, null);
-        sentinel.next = sentinel;
-        sentinel.prev = sentinel;
-        size = 0;
-
-        for (int i = 0; i < other.size(); i += 1) {
-            addLast((T) other.get(i));
-        }
-    }
+//    public LinkedListDeque(LinkedListDeque other) {
+//        sentinel = new IntNode(null, null, null);
+//        sentinel.next = sentinel;
+//        sentinel.prev = sentinel;
+//        size = 0;
+//
+//        for (int i = 0; i < other.size(); i += 1) {
+//            addLast((T) other.get(i));
+//        }
+//    }
 //    public static void main(String[] args){
 //        LinkedListDeque<Integer> lld = new LinkedListDeque<Integer>();
 //        lld.removeFirst();
