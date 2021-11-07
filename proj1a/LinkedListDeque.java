@@ -4,8 +4,8 @@ public class LinkedListDeque<T> {
 
     public class IntNode {
         private IntNode prev;
-        public T item;
-        public IntNode next;
+        private T item;
+        private IntNode next;
 
         public IntNode(IntNode p, T i, IntNode n) {
             prev = p;
@@ -124,6 +124,9 @@ public class LinkedListDeque<T> {
         sentinel.prev = sentinel;
         size = 0;
     }
+}
+
+    //API无法通过，所以删掉
 
     /* Creates a deep copy of other
       A walkthrough that provides a solution for this copy constructor is available at https://www.youtube.com/watch?v=JNroRiEG7U4)*/
@@ -147,6 +150,6 @@ public class LinkedListDeque<T> {
 //        System.out.println(lld.size);
 //    }
 
-}
+
 
 

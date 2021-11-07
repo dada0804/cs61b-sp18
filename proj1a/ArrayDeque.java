@@ -16,7 +16,7 @@ public class ArrayDeque<T> {
     /* Adds an item of type T to the front of the deque. */
     private int minusOne(int index) {
         index -= 1;
-        return (index+items.length) % items.length;
+        return (index + items.length) % items.length;
     }
 
     private int addOne(int index) {
@@ -85,7 +85,7 @@ public class ArrayDeque<T> {
     /* Prints the items in the deque from first to last, separated by a space.
     Once all the items have been printed, print out a new line.*/
     public void printDeque() {
-        for (int i = nextFirst; i < nextFirst+ size; i += 1) {
+        for (int i = nextFirst; i < nextFirst + size; i += 1) {
             System.out.print(items[addOne(i)] + " ");
         }
         System.out.println();
@@ -130,8 +130,9 @@ public class ArrayDeque<T> {
 
     public T get(int index) {
         return items[addOne(nextFirst + index)];
-
     }
+}
+    //API无法通过，所以删掉
 
     /* Creates a deep copy of other
       A walkthrough that provides a solution for this copy constructor is available at https://www.youtube.com/watch?v=JNroRiEG7U4)*/
@@ -169,6 +170,6 @@ public class ArrayDeque<T> {
 //        System.out.println(lld.removeLast());
 //    }
 
-}
+
 
 
