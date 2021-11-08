@@ -1,3 +1,5 @@
+import java.util.Locale;
+
 public class Palindrome {
     public Deque<Character> wordToDeque(String word) {
         Deque d = new LinkedListDeque();
@@ -26,6 +28,7 @@ public class Palindrome {
 
 
     public boolean isPalindrome(String word) {
+        word = word.toLowerCase();
         while (word.length() > 1) {
             if (! compare(word)){
                 return false;
@@ -39,6 +42,7 @@ public class Palindrome {
 
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
+        word = word.toLowerCase();
         while (word.length() > 1) {
             Character start = word.charAt(0);
             Character end = word.charAt(word.length() - 1);
