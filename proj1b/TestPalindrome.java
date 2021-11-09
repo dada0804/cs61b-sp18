@@ -41,7 +41,7 @@ public class TestPalindrome {
     @Test
     public void testNisPalindrome(){
         CharacterComparator offByN = new OffByN(5);
-        assertTrue(palindrome.isPalindrome("Acehf", offByN));
+        assertTrue(palindrome.isPalindrome("acehf", offByN));
         assertFalse(palindrome.isPalindrome("Ac:hf", offByN));
         assertFalse(palindrome.isPalindrome(":bac?", offByN));
 
