@@ -10,12 +10,15 @@ public class Palindrome {
     }
 
     private Boolean compare(String word) {
-          Character start = word.charAt(0);
+        if (word == "") {
+            return true;
+        }
+        Character start = word.charAt(0);
         Character end = word.charAt(word.length() - 1);
         return start.compareTo(end) == 0;
     }
 
-    private String toString(Deque d){
+    private String toString(Deque d) {
         d.removeFirst();
         d.removeLast();
         String newWord = "";
@@ -26,19 +29,29 @@ public class Palindrome {
         return newWord;
     }
 
-
     public boolean isPalindrome(String word) {
-        word = word.toLowerCase();
-        while (word.length() > 1) {
-            if (! compare(word)){
-                return false;
-            }
-            Deque d = wordToDeque(word);
-            word = toString(d);
+        /* recursion */
+        if (word.length() <= 1) {
+            return true;
         }
-        return true;
-
+        Deque d = wordToDeque(word);
+        String next = toString(d);
+        if (isPalindrome(next)) {
+            return compare(word);
+        }
+        return false;
     }
+
+    /* iteration */
+//        word = word.toLowerCase();
+//        while (word.length() > 1) {
+//            if (! compare(word)){
+//                return false;
+//            }
+//            Deque d = wordToDeque(word);
+//            word = toString(d);
+//        }
+//        return true;
 
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
@@ -46,7 +59,7 @@ public class Palindrome {
         while (word.length() > 1) {
             Character start = word.charAt(0);
             Character end = word.charAt(word.length() - 1);
-            if (! cc.equalChars(start, end)){
+            if (!cc.equalChars(start, end)) {
                 return false;
             }
             Deque d = wordToDeque(word);
