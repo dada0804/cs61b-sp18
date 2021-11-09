@@ -7,10 +7,12 @@ public class OffByN implements CharacterComparator {
 
     @Override
     public boolean equalChars(char x, char y){
+        if (! Character.isLetter(x) | !Character.isLetter(y)){
+            return false;
+        }
         int a = x;
         int b = y;
         int diff = a - b;
-
         return diff == BY | diff == -BY;
     }
 

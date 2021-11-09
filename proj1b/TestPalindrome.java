@@ -19,7 +19,8 @@ public class TestPalindrome {
     @Test
     public void testisPalindrome(){
         assertFalse(palindrome.isPalindrome("zulus"));
-        assertTrue(palindrome.isPalindrome("racecar"));
+        assertTrue(palindrome.isPalindrome("Racecar"));
+        assertFalse(palindrome.isPalindrome("rac:car"));
         assertTrue(palindrome.isPalindrome("r"));
         assertTrue(palindrome.isPalindrome(""));
 
@@ -31,13 +32,15 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("flake", offByOne));
         assertFalse(palindrome.isPalindrome("racecar", offByOne));
 
+
     }
 
     @Test
     public void testNisPalindrome(){
         CharacterComparator offByN = new OffByN(5);
-        assertTrue(palindrome.isPalindrome("acehf", offByN));
-        assertFalse(palindrome.isPalindrome("fbach", offByN));
+        assertTrue(palindrome.isPalindrome("Acehf", offByN));
+        assertFalse(palindrome.isPalindrome("Ac:hf", offByN));
+        assertFalse(palindrome.isPalindrome(":bac?", offByN));
 
     }
 
