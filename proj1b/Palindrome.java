@@ -13,10 +13,9 @@ public class Palindrome {
         if (word == "") {
             return true;
         }
-        word = word.toLowerCase();
         int start = word.charAt(0);
         int end = word.charAt(word.length() - 1);
-        return start - end == 0 & Character.isLetter(start) & Character.isLetter(end);
+        return start - end == 0;
     }
 
     private String toString(Deque d) {
@@ -34,7 +33,7 @@ public class Palindrome {
         /* recursion */
 
         if (word.length() <= 1) {
-            return compare(word);
+            return true;
         }
         Deque d = wordToDeque(word);
         String next = toString(d);
@@ -57,9 +56,8 @@ public class Palindrome {
 
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
-        word = word.toLowerCase();
         if (word.length() <= 1) {
-            return compare(word);}
+            return true;}
         Deque d = wordToDeque(word);
         String next = toString(d);
         if (isPalindrome(next, cc)) {
