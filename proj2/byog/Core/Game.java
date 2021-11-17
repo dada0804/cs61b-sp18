@@ -250,27 +250,6 @@ public class Game {
         }
     }
 
-    public static void generateRandomRooms(int n){
-        rooms = new Rooms[n];
-        int x = RANDOM.nextInt(WIDTH - 4) + 1; //x_Pos
-        int y = RANDOM.nextInt(HEIGHT - 4) + 1;//y_Pos
-        int roomWidth = Math.min(RANDOM.nextInt(6) + 3, WIDTH - 1 - x);
-        int roomHeight = Math.min(RANDOM.nextInt(6) + 3, HEIGHT - 1 - y);
-        //creating the first room at a random location.
-        rooms[0] = new Rooms(x, y, roomWidth, roomHeight);
-        for(int i = 0; i < n - 1; i++){
-            while(rooms[i + 1] == null) {
-                x = RANDOM.nextInt(WIDTH - 4) + 1; //x_Pos
-                y = RANDOM.nextInt(HEIGHT - 4) + 1;//y_Pos
-                roomWidth = Math.min(RANDOM.nextInt(6) + 3, WIDTH - 1 - x);
-                roomHeight = Math.min(RANDOM.nextInt(6) + 3, HEIGHT - 1 - y);
-                rooms[i + 1] = new Rooms(x, y, roomWidth, roomHeight);
-                if (collidedWithPreviousRooms(rooms, i)) {
-                    rooms[i + 1] = null;
-                }
-            }
-        }
-    }
 
     public static void setRooms(TETile[][] tiles){
         for(int i = 0; i < rooms.length; i++){
