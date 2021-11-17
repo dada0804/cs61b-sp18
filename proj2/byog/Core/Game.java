@@ -256,7 +256,7 @@ public class Game {
             if(rooms[i] == null){
                 break;
             }
-            rooms[i].draw(tiles);
+            rooms[i].draw_rooms(tiles);
         }
     }
 }
