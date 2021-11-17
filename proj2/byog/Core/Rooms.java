@@ -1,15 +1,12 @@
 package byog.Core;
 
-import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 
-import java.util.Random;
+
 
 
 public class Rooms {
-    private static final int WIDTH = 50;
-    private static final int HEIGHT = 50;
 
     protected int x;
     protected int y;
@@ -17,7 +14,7 @@ public class Rooms {
     protected int roomHeight;
     protected Door[] doors = new Door[2]; // ??door也可以有三个的吧？
 
-    private class Door{
+    private static class Door{
         int x;
         int y;
 
@@ -44,7 +41,7 @@ public class Rooms {
         this.roomWidth = roomWidth;
     }
 
-    public void draw(TETile[][] tiles){
+    public void draw_rooms(TETile[][] tiles){
         //draw hallways
         TETile floor = Tileset.FLOOR;
         for(int w = 0; w < roomWidth; w++){
