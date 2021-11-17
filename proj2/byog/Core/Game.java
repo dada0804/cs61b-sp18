@@ -3,7 +3,7 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-import edu.princeton.cs.introcs.StdDraw;
+//import edu.princeton.cs.introcs.StdDraw;
 
 import java.util.Random;
 
@@ -51,6 +51,7 @@ public class Game {
         if(input.toLowerCase().contains("n") && input.toLowerCase().contains("s")){
             int start = input.toLowerCase().indexOf("n") + 1;
             int end = input.toLowerCase().indexOf("s");
+//            seed = Long.parseLong(input.substring(start, end));
             try {
                 seed = Long.parseLong(input.substring(start, end));
             }catch(Exception e){
