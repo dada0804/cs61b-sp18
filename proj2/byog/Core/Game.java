@@ -3,9 +3,9 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-//import edu.princeton.cs.introcs.StdDraw;
 
 import java.util.Random;
+
 
 
 public class Game {
@@ -22,6 +22,7 @@ public class Game {
     private static Rooms[] rooms;
 
     private static int roomNum;
+
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
