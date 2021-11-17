@@ -3,7 +3,7 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-import edu.princeton.cs.introcs.StdDraw;
+//import edu.princeton.cs.introcs.StdDraw;
 
 import java.util.Random;
 
@@ -51,6 +51,7 @@ public class Game {
         if(input.toLowerCase().contains("n") && input.toLowerCase().contains("s")){
             int start = input.toLowerCase().indexOf("n") + 1;
             int end = input.toLowerCase().indexOf("s");
+//            seed = Long.parseLong(input.substring(start, end));
             try {
                 seed = Long.parseLong(input.substring(start, end));
             }catch(Exception e){
@@ -77,40 +78,35 @@ public class Game {
     public static void setSeed(Long seed){
         RANDOM = new Random(seed);
     }
+    private static boolean collidedWithPreviousRooms(Rooms[] rooms, int i){ // use to check if rooms[i+1] is collided with previous i rooms.
 
-    private static boolean collidedWithPreviousRooms(Rooms[] rooms, int i){
         for(int j = 0; j <= i; j++){
-            if(rooms[i+1].isCollided(rooms[j])){
+            if(rooms[i + 1].isCollided(rooms[j])){
                 return true;
             }
         }
         return false;
     }
-
-    public static void branchTop(Rooms[] rooms, int i) {
-        if (HEIGHT - (rooms[i].y + rooms[i].roomHeight) < MIN_ROOMLENGTH) {
+    public static void branchTop(Rooms[] rooms, int i){
+        if (HEIGHT - (rooms[i].y + rooms[i].roomHeight) < MIN_ROOMLENGTH){
             return;
         }
-
-        //x应该是width上任意一点
-        //如果该room的width和最小长度一样，那么x（也就是上面房间的x）就等于这个room的x，否则等于随机数（要把范围传进去，0-该数值-1）
         int x = (rooms[i].roomWidth == MIN_ROOMLENGTH) ?
                 rooms[i].x : RANDOM.nextInt(rooms[i].roomWidth - MIN_ROOMLENGTH) + rooms[i].x;
-        //y坐标就是在此基础上加上height
         int y = rooms[i].y + rooms[i].roomHeight;
-        //新房子的宽度要么是在3-8之间，要么是整个房间宽度-x坐标轴，选取这两个小的（以防超出大房间范围）
         int width = Math.min(RANDOM.nextInt(MAX_ROOMLENGTH - MIN_ROOMLENGTH) + MIN_ROOMLENGTH, WIDTH - x);
         int height = Math.min(RANDOM.nextInt(MAX_ROOMLENGTH - MIN_ROOMLENGTH) + MIN_ROOMLENGTH, HEIGHT - y);
 
         rooms[i + 1] = new Rooms(x, y, width, height);
-        if (collidedWithPreviousRooms(rooms, i)) {
+        if(collidedWithPreviousRooms(rooms, i)){
             rooms[i + 1] = null;
-        } else {
-            //create doors
+        }else{
+            //create doors when branching top.
             int leftBound = rooms[i + 1].x + 1;
-            //based on which one is left or right
             int rightBound = Math.min(rooms[i].x + rooms[i].roomWidth - 2, rooms[i + 1].x + rooms[i + 1].roomWidth - 2);
+            //x + rW - 1 is the x pos of the room's right most block, need to use x + rW - 2 because the door can't be at the corner.
 
+            //X0 and Y0 is door position for room[i]'s second door and X1 & Y1 for room[i + 1]'s first door
             int doorX0 = (rightBound - leftBound == 0) ? rightBound : RANDOM.nextInt(rightBound - leftBound) + leftBound;
             int doorY0 = y - 1;
             int doorX1 = doorX0;
@@ -120,7 +116,6 @@ public class Game {
             rooms[i + 1].createDoor(0, doorX1, doorY1);
         }
     }
-
     public static  void branchBot(Rooms[] rooms, int i){
         if (rooms[i].y < MIN_ROOMLENGTH){
             return;
@@ -149,7 +144,6 @@ public class Game {
             rooms[i + 1].createDoor(0, doorX1, doorY1);
         }
     }
-
     public static void branchLeft(Rooms[] rooms, int i){
         if (rooms[i].x < MIN_ROOMLENGTH){
             return;
@@ -205,11 +199,10 @@ public class Game {
             rooms[i + 1].createDoor(0, doorX1, doorY1);
         }
     }
-
     public static void branchRoom(Rooms[] rooms, int i){
         int trial = 0;
-        while (rooms[i + 1] == null){
-            switch(RANDOM.nextInt(4)){
+        while(rooms[i + 1] == null){
+            switch(RANDOM.nextInt(4)){//RANDOM.nextInt(4)
                 case 0:
                     branchTop(rooms, i);
                     trial++;
@@ -238,23 +231,44 @@ public class Game {
         }
     }
 
-    public static void initializeRandomRooms(int n) {
+    public static void initializeRandomRooms(int n){
         rooms = new Rooms[n];
-        int x = RANDOM.nextInt(WIDTH - MIN_ROOMLENGTH);
-        int y = RANDOM.nextInt(HEIGHT - MIN_ROOMLENGTH);
+        int x = RANDOM.nextInt(WIDTH - MIN_ROOMLENGTH); //x_Pos
+        int y = RANDOM.nextInt(HEIGHT - MIN_ROOMLENGTH);//y_Pos
         int roomWidth = Math.min(RANDOM.nextInt(MAX_ROOMLENGTH - MIN_ROOMLENGTH) + MIN_ROOMLENGTH, WIDTH - x);
         int roomHeight = Math.min(RANDOM.nextInt(MAX_ROOMLENGTH - MIN_ROOMLENGTH) + MIN_ROOMLENGTH, HEIGHT - y);
+        //creating the first room at a random location.
         rooms[0] = new Rooms(x, y, roomWidth, roomHeight);
 
-        //branch
-        for (int i = 0; i < n -1; i++){
-            branchRoom(rooms, i);
-            if (rooms[i+1] == null){
+        //start branching rooms based on the very first room.
+        for(int i = 0; i < n - 1; i++){
+            branchRoom(rooms,i);
+            if(rooms[i + 1] == null){
                 break;
             }
         }
+    }
 
-
+    public static void generateRandomRooms(int n){
+        rooms = new Rooms[n];
+        int x = RANDOM.nextInt(WIDTH - 4) + 1; //x_Pos
+        int y = RANDOM.nextInt(HEIGHT - 4) + 1;//y_Pos
+        int roomWidth = Math.min(RANDOM.nextInt(6) + 3, WIDTH - 1 - x);
+        int roomHeight = Math.min(RANDOM.nextInt(6) + 3, HEIGHT - 1 - y);
+        //creating the first room at a random location.
+        rooms[0] = new Rooms(x, y, roomWidth, roomHeight);
+        for(int i = 0; i < n - 1; i++){
+            while(rooms[i + 1] == null) {
+                x = RANDOM.nextInt(WIDTH - 4) + 1; //x_Pos
+                y = RANDOM.nextInt(HEIGHT - 4) + 1;//y_Pos
+                roomWidth = Math.min(RANDOM.nextInt(6) + 3, WIDTH - 1 - x);
+                roomHeight = Math.min(RANDOM.nextInt(6) + 3, HEIGHT - 1 - y);
+                rooms[i + 1] = new Rooms(x, y, roomWidth, roomHeight);
+                if (collidedWithPreviousRooms(rooms, i)) {
+                    rooms[i + 1] = null;
+                }
+            }
+        }
     }
 
     public static void setRooms(TETile[][] tiles){
@@ -265,7 +279,4 @@ public class Game {
             rooms[i].draw(tiles);
         }
     }
-
-
-
 }
