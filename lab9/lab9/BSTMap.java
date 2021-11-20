@@ -121,7 +121,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     /** Removes KEY from the tree if present
      *  returns VALUE removed,
-     *  null on failed removal.
+     *  null on failed removal
      */
     @Override
     public V remove(K key){

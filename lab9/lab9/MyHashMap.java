@@ -100,7 +100,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     }
 
     /* Removes the mapping for the specified key from this map if exists.
-     * Not required for this lab. If you don't implement this, throw an
+     * Not required for this lab.If you don't implement this, throw an
      * UnsupportedOperationException. */
     @Override
     public V remove(K key) {
