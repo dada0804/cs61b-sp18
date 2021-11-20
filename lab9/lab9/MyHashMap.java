@@ -104,12 +104,16 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * UnsupportedOperationException. */
     @Override
     public V remove(K key) {
+        if (get(key) != null){
         int index = hash(key, buckets.length);
         buckets[index].remove(key);
         if (!buckets[index].containsKey(key)){
             size -= 1;
         }
-        return buckets[index].get(key);
+        return buckets[index].get(key);}
+        else{
+            return null;
+        }
 
     }
 
