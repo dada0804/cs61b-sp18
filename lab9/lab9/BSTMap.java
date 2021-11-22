@@ -125,6 +125,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key){
+        // 有必要管size吗？
+//        if (size == 0){
+//            return null;
+//        }
         if (get(key) == null ) {
             return null;}
         //要注意root的情况
@@ -132,10 +136,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             V value = root.value;
             root = root.left;
             size -= 1;
+            keyset.remove(key);
             return value;
         }else{
             Node deleted = removeHelper(key, root);
             size -= 1;
+            keyset.remove(key);
             return deleted.value;}
         }
 
@@ -181,5 +187,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         System.out.println(bstmap.size);
         System.out.println(bstmap.get("cat"));
         bstmap.put("zebra", 90);
+        bstmap.remove("cat");
+        bstmap.remove("fish");
+        bstmap.remove("zebra");
+        bstmap.remove("dog");
     }
 }
