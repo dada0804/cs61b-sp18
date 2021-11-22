@@ -5,14 +5,14 @@ import edu.princeton.cs.algs4.StdRandom;
 
 public class PercolationStats {
     private int times;
-    private double[] counts;
+    private double[] threshold;
 
     public PercolationStats(int N, int T, PercolationFactory pf){
         if(N <= 0 || T <= 0){
             throw new java.lang.IllegalArgumentException();
         }
         times = T;
-        counts = new double[T];
+        threshold = new double[T];
         for (int i = 0; i < T; i++){
             Percolation perco = pf.make(N);
             while (!perco.percolates()){
@@ -20,16 +20,16 @@ public class PercolationStats {
                 int n = StdRandom.uniform(0, N);
                 perco.open(m,n);
             }
-            counts[i] = perco.numberOfOpenSites();
+            threshold[i] = perco.numberOfOpenSites()/(N*N);
         }
     }
 
     public double mean(){
-        return StdStats.mean(counts);
+        return StdStats.mean(threshold);
     }
 
     public double stddev(){
-        return StdStats.stddev(counts);
+        return StdStats.stddev(threshold);
 
     }
     public double confidenceLow(){
