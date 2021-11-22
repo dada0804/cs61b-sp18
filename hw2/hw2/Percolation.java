@@ -37,17 +37,19 @@ public class Percolation {
             count += 1;
         }
 
+
     //union
-        if (row-1 >= 0&& isOpen(row-1, col) && ! uf.connected(xyTo1D(row, col), xyTo1D(row-1,col))){
+
+        if (row-1 >= 0&& isOpen(row-1, col)){
             uf.union(xyTo1D(row, col), xyTo1D(row-1,col));
         }
-        if (row + 1 < length && isOpen(row+1, col) && ! uf.connected(xyTo1D(row, col), xyTo1D(row+1, col))){
+        if ((row + 1 < length) && isOpen(row+1, col)){
             uf.union(xyTo1D(row, col), xyTo1D(row+1, col));
         }
-        if (col-1 >= 0&& isOpen(row, col-1) && ! uf.connected(xyTo1D(row, col), xyTo1D(row, col-1))){
+        if (col-1 >= 0&& isOpen(row, col-1)){
             uf.union(xyTo1D(row, col), xyTo1D(row, col-1));
         }
-        if (col + 1 < length && isOpen(row, col+1) && ! uf.connected(xyTo1D(row, col), xyTo1D(row,col+1))){
+        if (col + 1 < length && isOpen(row, col+1)){
             uf.union(xyTo1D(row, col), xyTo1D(row,col+1));
         }
 

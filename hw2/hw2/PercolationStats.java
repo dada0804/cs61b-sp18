@@ -20,7 +20,8 @@ public class PercolationStats {
                 int n = StdRandom.uniform(0, N);
                 perco.open(m,n);
             }
-            threshold[i] = perco.numberOfOpenSites()/(N*N);
+            double count = perco.numberOfOpenSites();
+            threshold[i] = count/(N*N);
         }
     }
 
