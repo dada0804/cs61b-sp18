@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
     private boolean [][] grid;
     private WeightedQuickUnionUF uf;
+    private WeightedQuickUnionUF noBottom;
     private int length;
     private int count;
     private int virtualTop;
@@ -19,16 +20,21 @@ public class Percolation {
         virtualTop = N*N ;
         virtualBottom = N*N + 1;
         uf = new WeightedQuickUnionUF(N * N + 2);
+        noBottom = new WeightedQuickUnionUF(N * N + 1);
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 grid[i][j] = false;
             }
         }
-        for (int i = 0; i < N; i++){
-            uf.union(virtualTop, i);
-        }
-        for (int i = length *(length-1); i < N*N; i++){
-            uf.union(virtualBottom, i);
+
+        if(N>1) {
+            for (int i = 0; i < N; i++) {
+                uf.union(virtualTop, i);
+                noBottom.union(virtualTop,i);
+            }
+            for (int i = length * (length - 1); i < N * N; i++) {
+                uf.union(virtualBottom, i);
+            }
         }
 
     }
@@ -53,15 +59,19 @@ public class Percolation {
 
         if (row-1 >= 0&& isOpen(row-1, col)){
             uf.union(xyTo1D(row, col), xyTo1D(row-1,col));
+            noBottom.union(xyTo1D(row, col), xyTo1D(row-1,col));
         }
         if ((row + 1 < length) && isOpen(row+1, col)){
             uf.union(xyTo1D(row, col), xyTo1D(row+1, col));
+            noBottom.union(xyTo1D(row, col), xyTo1D(row+1, col));
         }
         if (col-1 >= 0&& isOpen(row, col-1)){
             uf.union(xyTo1D(row, col), xyTo1D(row, col-1));
+            noBottom.union(xyTo1D(row, col), xyTo1D(row, col-1));
         }
         if (col + 1 < length && isOpen(row, col+1)){
             uf.union(xyTo1D(row, col), xyTo1D(row,col+1));
+            noBottom.union(xyTo1D(row, col), xyTo1D(row,col+1));
         }
 
     }
@@ -71,7 +81,10 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col){
-        return (isOpen(row,col) && uf.connected(xyTo1D(row,col), virtualTop));
+        if (length == 1){
+            return isOpen(0,0);
+        }
+        return (isOpen(row,col) && noBottom.connected(xyTo1D(row,col), virtualTop));
     }
 
     public int numberOfOpenSites(){
@@ -79,6 +92,9 @@ public class Percolation {
     }
 
     public boolean percolates() {
+        if (length == 1){
+            return isOpen(0,0);
+        }
         return uf.connected(virtualTop, virtualBottom);
     }
 
