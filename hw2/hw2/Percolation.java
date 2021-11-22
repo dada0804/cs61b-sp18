@@ -7,19 +7,30 @@ public class Percolation {
     private WeightedQuickUnionUF uf;
     private int length;
     private int count;
+    private int virtualTop;
+    private int virtualBottom;
 
-    public Percolation(int N){
-        if (N <= 0){
+    public Percolation(int N) {
+        if (N <= 0) {
             throw new java.lang.IllegalArgumentException();
         }
         length = N;
         grid = new boolean[N][N];
-        for (int i = 0; i < N; i++){
-            for (int j = 0; j <N; j++){
+        virtualTop = N*N ;
+        virtualBottom = N*N + 1;
+        uf = new WeightedQuickUnionUF(N * N + 2);
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
                 grid[i][j] = false;
             }
         }
-        uf = new WeightedQuickUnionUF(N*N);
+        for (int i = 0; i < N; i++){
+            uf.union(virtualTop, i);
+        }
+        for (int i = length *(length-1); i < N*N; i++){
+            uf.union(virtualBottom, i);
+        }
+
     }
 
     private int xyTo1D(int r, int c){
@@ -53,7 +64,6 @@ public class Percolation {
             uf.union(xyTo1D(row, col), xyTo1D(row,col+1));
         }
 
-
     }
 
     public boolean isOpen(int row, int col) {
@@ -61,12 +71,7 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col){
-        for (int i = 0; i < length; i++){
-            if (isOpen(0,i) && isOpen(row, col) && uf.connected(xyTo1D(row,col), i)){
-                return true;
-            }
-        }
-        return false;
+        return (isOpen(row,col) && uf.connected(xyTo1D(row,col), virtualTop));
     }
 
     public int numberOfOpenSites(){
@@ -74,12 +79,7 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        for (int j = length * (length - 1); j < length * length; j++) {
-            if (isFull(length-1, j % length) ){
-                return true;
-            }
-        }
-        return false;
+        return uf.connected(virtualTop, virtualBottom);
     }
 
 
