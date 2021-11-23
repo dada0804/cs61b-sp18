@@ -131,19 +131,21 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         if(! inBounds(leftIndex(index)) && ! inBounds(rightIndex(index))){
             return;
         }
-        else if(! inBounds(leftIndex(index))){
+
+        if(! inBounds(leftIndex(index))){
             if (contents[index].myPriority > contents[rightIndex(index)].myPriority){
                 swap(index, rightIndex(index));
             }
             return;
             }
-        else if(! inBounds(rightIndex(index))){
+
+        if(! inBounds(rightIndex(index))){
             if(contents[index].myPriority > contents[leftIndex(index)].myPriority){
             swap(index, leftIndex(index));}
             return;
         }
 
-        if(contents[index].myPriority > contents[rightIndex(index)].myPriority
+        if (contents[index].myPriority > contents[rightIndex(index)].myPriority
                 || contents[index].myPriority > contents[leftIndex(index)].myPriority){
             int swapped = min(leftIndex(index), rightIndex(index));
             swap(index, swapped);
@@ -225,19 +227,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         for (int i = 1; i <= size; i++){
             if (contents[i].myItem.equals(item)){
                 contents[i].myPriority = priority;
-                if (contents[i].myPriority < contents[parentIndex(i)].myPriority){
-                    swim(i);
-                }
-                else if (contents[i].myPriority < contents[rightIndex(i)].myPriority
-                        || contents[i].myPriority < contents[leftIndex(i)].myPriority){
-                    sink(i);
-                }
-                else{
-                    return;
-                }
+                swim(i);
+                sink(i);
             }
         }
-        return;
     }
 
     /**
