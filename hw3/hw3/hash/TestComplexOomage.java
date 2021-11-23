@@ -48,6 +48,12 @@ public class TestComplexOomage {
         params.add(255);
         ComplexOomage co = new ComplexOomage(params);
         deadlyList.add(co);
+        ArrayList<Integer> params2 = new ArrayList<>();
+        params2.add(0);
+        params2.add(0);
+        params2.add(0);
+        ComplexOomage co2 = new ComplexOomage(params2);
+        deadlyList.add(co2);
 
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
     }

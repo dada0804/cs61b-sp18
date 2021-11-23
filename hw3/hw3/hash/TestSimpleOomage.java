@@ -32,8 +32,8 @@ public class TestSimpleOomage {
         SimpleOomage ooA = new SimpleOomage(5, 10, 20);
         SimpleOomage ooA2 = new SimpleOomage(5, 10, 20);
         SimpleOomage ooB = new SimpleOomage(10, 5, 20);
-        SimpleOomage ooC = new SimpleOomage(255, 0, 0);
-        SimpleOomage ooD = new SimpleOomage(0, 255, 0);
+        SimpleOomage ooC = new SimpleOomage(0, 0, 10);
+        SimpleOomage ooD = new SimpleOomage(0, 15, 0);
         assertEquals(ooA.hashCode(), ooA2.hashCode());
         assertNotEquals(ooA.hashCode(), ooB.hashCode());
         assertNotEquals(ooB.hashCode(), ooC.hashCode());

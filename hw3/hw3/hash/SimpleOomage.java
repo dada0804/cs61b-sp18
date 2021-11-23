@@ -38,7 +38,7 @@ public class SimpleOomage implements Oomage {
         } else {
             // TODO: Write a perfect hash function for Simple Oomages.
             HashSet color = new HashSet();
-            return (this.red / 5 * 1) + (this.green / 5 * 2) + (this.blue/5 * 3);
+            return ((this.red / 5 )*3 + this.green / 5)*3  + this.blue/5 ;
         }
     }
 
