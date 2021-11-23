@@ -131,19 +131,14 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         if(! inBounds(leftIndex(index)) && ! inBounds(rightIndex(index))){
             return;
         }
-        else if(! inBounds(leftIndex(index))){
-            if (contents[index].myPriority > contents[rightIndex(index)].myPriority){
-                swap(index, rightIndex(index));
+        if(! inBounds(rightIndex(index))){
+            if (contents[index].myPriority > contents[leftIndex(index)].myPriority){
+                swap(index, leftIndex(index));
             }
             return;
             }
-        else if(! inBounds(rightIndex(index))){
-            if(contents[index].myPriority > contents[leftIndex(index)].myPriority){
-            swap(index, leftIndex(index));}
-            return;
-        }
 
-        else if (contents[index].myPriority > contents[rightIndex(index)].myPriority
+        if (contents[index].myPriority > contents[rightIndex(index)].myPriority
                 || contents[index].myPriority > contents[leftIndex(index)].myPriority){
             int swapped = min(leftIndex(index), rightIndex(index));
             swap(index, swapped);
