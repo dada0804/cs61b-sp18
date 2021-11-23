@@ -46,14 +46,53 @@ public class TestComplexOomage {
         params.add(255);
         params.add(255);
         params.add(255);
+        params.add(6);
+        params.add(10);
         ComplexOomage co = new ComplexOomage(params);
+        System.out.println(co.hashCode());
+
         deadlyList.add(co);
         ArrayList<Integer> params2 = new ArrayList<>();
-        params2.add(0);
-        params2.add(0);
-        params2.add(0);
+        params2.add(255);
+        params2.add(255);
+        params2.add(254);
+        params2.add(6);
+        params2.add(6);
         ComplexOomage co2 = new ComplexOomage(params2);
+        System.out.println(co2.hashCode());
         deadlyList.add(co2);
+
+        ArrayList<Integer> params3 = new ArrayList<>();
+        params3.add(255);
+        params3.add(255);
+        params3.add(255);
+        params3.add(255);
+        params3.add(255);
+        ComplexOomage co3 = new ComplexOomage(params3);
+        deadlyList.add(co3);
+        System.out.println(co3.hashCode());
+
+        ArrayList<Integer> params4 = new ArrayList<>();
+        params4.add(255);
+        params4.add(255);
+        params4.add(255);
+        params4.add(100);
+        params4.add(156);
+        ComplexOomage co4 = new ComplexOomage(params4);
+        deadlyList.add(co4);
+        System.out.println(co4.hashCode());
+
+        ArrayList<Integer> params5 = new ArrayList<>();
+        params5.add(255);
+        params5.add(255);
+        params5.add(255);
+        params5.add(200);
+        params5.add(20);
+        ComplexOomage co5 = new ComplexOomage(params5);
+        deadlyList.add(co5);
+        System.out.println(co5.hashCode());
+
+
 
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
     }
