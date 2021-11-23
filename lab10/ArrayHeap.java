@@ -28,7 +28,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int leftIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return 2 * i;
     }
 
     /**
@@ -36,7 +36,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int rightIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return 2 * i + 1;
     }
 
     /**
@@ -44,7 +44,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int parentIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return i / 2;
     }
 
     /**
@@ -108,7 +108,15 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
-        return;
+
+        if (contents[parentIndex(index)] == null){
+            return;
+        }
+        if (contents[index].myPriority < contents[parentIndex(index)].myPriority){
+            swap(index, parentIndex(index));
+            swim(parentIndex(index));
+        }
+        ;
     }
 
     /**
@@ -119,7 +127,29 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
-        return;
+
+        if(! inBounds(leftIndex(index)) && ! inBounds(rightIndex(index))){
+            return;
+        }
+        else if(! inBounds(leftIndex(index))){
+            if (contents[index].myPriority > contents[rightIndex(index)].myPriority){
+                swap(index, rightIndex(index));
+            }
+            return;
+            }
+        else if(! inBounds(rightIndex(index))){
+            if(contents[index].myPriority > contents[leftIndex(index)].myPriority){
+            swap(index, leftIndex(index));}
+            return;
+        }
+
+        if(contents[index].myPriority > contents[rightIndex(index)].myPriority
+                || contents[index].myPriority > contents[leftIndex(index)].myPriority){
+            int swapped = min(leftIndex(index), rightIndex(index));
+            swap(index, swapped);
+            sink(swapped);
+
+        }
     }
 
     /**
@@ -134,6 +164,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
 
         /* TODO: Your code here! */
+        Node newN = new Node(item, priority);
+        size += 1;
+        contents[size] = newN;
+        swim(size);
     }
 
     /**
@@ -143,7 +177,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T peek() {
         /* TODO: Your code here! */
-        return null;
+        return getNode(1).myItem;
     }
 
     /**
@@ -158,7 +192,12 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T removeMin() {
         /* TODO: Your code here! */
-        return null;
+        T min = contents[1].myItem;
+        swap(1, size);
+        contents[size] = null;
+        size -= 1;
+        sink(1);
+        return min;
     }
 
     /**
@@ -181,6 +220,23 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
+        // find the item first;
+        Node theNode;
+        for (int i = 1; i <= size; i++){
+            if (contents[i].myItem.equals(item)){
+                contents[i].myPriority = priority;
+                if (contents[i].myPriority < contents[parentIndex(i)].myPriority){
+                    swim(i);
+                }
+                else if (contents[i].myPriority < contents[rightIndex(i)].myPriority
+                        || contents[i].myPriority < contents[leftIndex(i)].myPriority){
+                    sink(i);
+                }
+                else{
+                    return;
+                }
+            }
+        }
         return;
     }
 
@@ -378,7 +434,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         pq.insert("b", 2);
         pq.insert("c", 3);
         pq.insert("d", 4);
+        System.out.println(pq);
         String removed = pq.removeMin();
+        System.out.println(pq);
         assertEquals("a", removed);
         assertEquals(9, pq.size());
         assertEquals("b", pq.contents[1].myItem);
