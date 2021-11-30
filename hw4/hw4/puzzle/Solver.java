@@ -1,12 +1,14 @@
 package hw4.puzzle;
 import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Stack;
+
 import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Solver {
     private int moves;
-    private ArrayList<WorldState> solution= new ArrayList<>();
+    private Stack<WorldState> solution= new Stack<>();
     private searchNode search;
     private ArrayList<WorldState> allAdded= new ArrayList<>(); //测试有多少enqueue了
 
@@ -72,7 +74,7 @@ public class Solver {
 
     public Iterable<WorldState> solution(){
         while(search!= null){
-            solution.add(search.cur);
+            solution.push(search.cur);
             search = search.prev;
         }
         return solution;
