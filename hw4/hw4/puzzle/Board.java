@@ -7,6 +7,17 @@ public class Board implements WorldState {
     private int[][] tiles;
     private int[][] goal;
 
+    private void goal(){
+        this.goal = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                goal[i][j] = N*i + j + 1;
+            }
+        }
+        goal[N-1][N-1] = 0;
+
+    }
+
 
     public Board(int[][] tiles){
         N = tiles.length;
@@ -66,6 +77,7 @@ public class Board implements WorldState {
 
 
     public int hamming(){
+        goal();
         int count = 0;
         for (int i = 0; i < N; i++){
             for (int j = 0; j < N; j++){
@@ -82,17 +94,11 @@ public class Board implements WorldState {
     }
 
     private int toY(int i){
-        return i%N;
+        return i%N - 1;
     }
 
     public int manhattan(){
-        this.goal = new int[N][N];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                goal[i][j] = N*i + j + 1;
-            }
-        }
-        goal[N-1][N-1] = 0;
+        goal();
 
         int count = 0;
         for (int i = 0; i < N; i++){
@@ -146,6 +152,10 @@ public class Board implements WorldState {
         }
         s.append("\n");
         return s.toString();
+    }
+
+    public int hashCode(){
+        return 0;
     }
 
 }
