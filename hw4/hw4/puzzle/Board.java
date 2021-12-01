@@ -94,7 +94,7 @@ public class Board implements WorldState {
     }
 
     private int toY(int i){
-        return (i+N)%N - 1;
+        return (i+N-1)%N ;
     }
 
     public int manhattan(){
@@ -119,6 +119,10 @@ public class Board implements WorldState {
     }
 
     public boolean equals(Object y){
+        // 借鉴了网上写的
+        // 基本思路就是——在什么条件下才能比较
+        // y是否是null，class是不是一致的--这样才能cast
+        // size要考虑，再去比较
 
         if (this == y) {
             return true;
