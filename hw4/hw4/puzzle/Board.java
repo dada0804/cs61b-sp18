@@ -94,7 +94,7 @@ public class Board implements WorldState {
     }
 
     private int toY(int i){
-        return i%N - 1;
+        return (i+N)%N - 1;
     }
 
     public int manhattan(){
@@ -132,6 +132,9 @@ public class Board implements WorldState {
         }
 
         Board that = (Board) y;
+        if (this.size() != that.size()){
+            return false;
+        }
         for (int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
                 if(this.tiles[i][j] != that.tiles[i][j])
