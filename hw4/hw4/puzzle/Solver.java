@@ -64,13 +64,13 @@ public class Solver {
         return moves;
     }
 
-    public Iterable<WorldState> allAdded(){
-//        while(search.prev != null){
-//            solution.add(search.cur);
-//            search = search.prev;
-//        }
-        return allAdded;
-    }
+//    private Iterable<WorldState> allAdded(){
+////        while(search.prev != null){
+////            solution.add(search.cur);
+////            search = search.prev;
+////        }
+//        return allAdded;
+//    }
 
     public Iterable<WorldState> solution(){
         while(search!= null){
@@ -80,14 +80,14 @@ public class Solver {
         return solution;
     }
 
-    public int numofEnqueue(){
-        //本来新建了一个list在每次enqueue的时候存储的
-//        //但是只要跟着searchNode走就可以，因为searchNode是一个个出来的
-//        while(search.prev != null){
-//            solution.add(search.cur);
-//            search = search.prev;
-//        }
-        return allAdded.size();
-    }
+//    private int numofEnqueue(){
+//        //本来新建了一个list在每次enqueue的时候存储的
+////        //但是只要跟着searchNode走就可以，因为searchNode是一个个出来的
+////        while(search.prev != null){
+////            solution.add(search.cur);
+////            search = search.prev;
+////        }
+//        return allAdded.size();
+//    }
 }
 

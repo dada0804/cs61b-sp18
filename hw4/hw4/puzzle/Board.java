@@ -9,15 +9,20 @@ public class Board implements WorldState {
 
 
     public Board(int[][] tiles){
-        this.tiles = tiles;
         N = tiles.length;
+        this.tiles = new int[N][N];
+        for (int i = 0; i < N; i++){
+            for (int j = 0; j < N; j++){
+                this.tiles[i][j] = tiles[i][j];
+            }
+        }
     }
 
     public int tileAt(int i, int j){
         if (i < 0 || i > N-1 || j < 0 || j > N-1){
             throw new IndexOutOfBoundsException();
         }
-        return i*(N) + j ;
+        return tiles[i][j] ;
     }
 
     public int size(){
@@ -64,7 +69,7 @@ public class Board implements WorldState {
         int count = 0;
         for (int i = 0; i < N; i++){
             for (int j = 0; j < N; j++){
-                if (tiles[i][j] != goal[i][j]){
+                if (tiles[i][j] !=0 &&  tileAt(i,j) != goal[i][j]){
                     count += 1;
                 }
             }
@@ -77,16 +82,17 @@ public class Board implements WorldState {
     }
 
     private int toY(int i){
-        return i%N-1;
+        return i%N;
     }
 
     public int manhattan(){
         this.goal = new int[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                goal[i][j] = tileAt(i, j);
+                goal[i][j] = N*i + j + 1;
             }
         }
+        goal[N-1][N-1] = 0;
 
         int count = 0;
         for (int i = 0; i < N; i++){
@@ -107,17 +113,22 @@ public class Board implements WorldState {
     }
 
     public boolean equals(Object y){
-        int[][] copyY = (int[][]) y;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (tiles[i][j] == copyY[i][j]) {
-                    return false;
-                }
 
-            }
+        if (this == y) {
+            return true;
         }
-        return true;
+        if (y == null) {
+            return false;
         }
+
+        if (this.getClass() != y.getClass()) {
+            return false;
+        }
+
+        Board that = (Board) y;
+
+        return this.tiles.equals(that.tiles);
+    }
 
 
 
