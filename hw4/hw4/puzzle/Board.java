@@ -90,7 +90,7 @@ public class Board implements WorldState {
     }
 
     private int toX(int i){
-        return i/N;
+        return (i-1)/N;
     }
 
     private int toY(int i){
@@ -132,8 +132,13 @@ public class Board implements WorldState {
         }
 
         Board that = (Board) y;
-
-        return this.tiles.equals(that.tiles);
+        for (int i = 0; i < N; i++){
+            for(int j = 0; j < N; j++){
+                if(this.tiles[i][j] != that.tiles[i][j])
+                    return false;
+            }
+        }
+        return true;
     }
 
 
