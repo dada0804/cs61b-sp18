@@ -1,6 +1,9 @@
 import edu.princeton.cs.algs4.Queue;
 
 public class QuickSort {
+//    Queue less = new Queue();
+//    Queue equal = new Queue();
+//    Queue greater = new Queue();
     /**
      * Returns a new queue that contains the given queues catenated together.
      *
@@ -48,12 +51,52 @@ public class QuickSort {
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
         // Your code here!
+        while (!unsorted.isEmpty()){
+            Item x = unsorted.dequeue();
+            if (x.compareTo(pivot) < 0){
+                less.enqueue(x);
+            }
+            else if(x.compareTo(pivot) > 0){
+                greater.enqueue(x);
+            }
+            else{
+                equal.enqueue(pivot);
+            }
+        }
+
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+           if (items.size() == 1){
+               return items;
+           }
+            Item pivot = getRandomItem(items);
+            Queue less = new Queue();
+            Queue equal = new Queue();
+            Queue greater = new Queue();
+            partition(items, pivot, less, equal, greater);
+            items = catenate(catenate(less, equal), greater);
+            quickSort(less);
+            quickSort(greater);
+            return items;
+    }
+    public static void main(String[] args){
+        Queue<Integer> num = new Queue<Integer>();
+        num.enqueue(3);
+        num.enqueue(8);
+        num.enqueue(1);
+        num.enqueue(7);
+        num.enqueue(2);
+
+        QuickSort x = new QuickSort();
+        Queue<Integer> y = new Queue<>();
+        y = x.quickSort(num);
+        for (int i : y){
+            System.out.print(i);
+        }
+
     }
 }

@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.Queue;
 
 public class MergeSort {
@@ -35,7 +36,13 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
-        return null;
+        Queue singleItem = new Queue();
+        while(!items.isEmpty()){
+            Queue x = new Queue();
+            x.enqueue(items.dequeue());
+            singleItem.enqueue(x);
+        }
+        return singleItem;
     }
 
     /**
@@ -54,13 +61,48 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
-        return null;
+        Queue sortedQueue = new Queue();
+        while(!q1.isEmpty() || !q2.isEmpty()){
+            sortedQueue.enqueue(getMin(q1, q2));
+        }
+
+        return sortedQueue;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        if (items == null){
+            return null;
+        }
+        Queue<Queue<Item>> singleItem = new Queue<>();
+        Queue sorted = new Queue();
+        singleItem = makeSingleItemQueues(items);
+        Queue q1 = singleItem.dequeue();
+        sorted = mergeSortedQueues(q1, q1);
+        while (!singleItem.isEmpty()){
+            Queue q3 = singleItem.dequeue();
+            sorted = mergeSortedQueues(sorted, q3);
+        }
+
+        return sorted;
+    }
+
+    public static void main(String[] args){
+        Queue<Integer> num = new Queue<Integer>();
+        num.enqueue(3);
+        num.enqueue(8);
+        num.enqueue(1);
+        num.enqueue(7);
+        num.enqueue(2);
+
+        MergeSort x = new MergeSort();
+        Queue<Integer> y = new Queue<>();
+        y = x.mergeSort(num);
+        for (int i : y){
+            System.out.print(i);
+        }
+
     }
 }
