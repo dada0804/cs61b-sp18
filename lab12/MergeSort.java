@@ -65,10 +65,12 @@ public class MergeSort {
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
         Queue sortedQueue = new Queue();
+        if (q1.isEmpty() && q2.isEmpty()){
+            return null;
+        }
         while(!q1.isEmpty() || !q2.isEmpty()){
             sortedQueue.enqueue(getMin(q1, q2));
         }
-
         return sortedQueue;
     }
 
@@ -99,18 +101,20 @@ public class MergeSort {
 //        num.enqueue(1);
 //        num.enqueue(7);
 //        num.enqueue(2);
-
-        num.enqueue(1);
-        num.enqueue(2);
-        num.enqueue(3);
-        num.enqueue(4);
-        num.enqueue(5);
+//
+//        num.enqueue(1);
+//        num.enqueue(2);
+//        num.enqueue(3);
+//        num.enqueue(4);
+//        num.enqueue(5);
 
         MergeSort x = new MergeSort();
         Queue<Integer> y = new Queue<>();
         y = x.mergeSort(num);
-        for (int i : y){
-            System.out.print(i);
+        if (y != null) {
+            for (int i : y) {
+                System.out.print(i);
+            }
         }
 
     }

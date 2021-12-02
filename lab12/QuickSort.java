@@ -78,26 +78,24 @@ public class QuickSort {
             Queue equal = new Queue();
             Queue greater = new Queue();
             partition(items, pivot, less, equal, greater);
-            items = catenate(catenate(less, equal), greater);
-            if (!less.isEmpty() || greater.isEmpty()){
-                quickSort(less);
-                quickSort(greater);
-            }
-            return items;
+            Queue x = quickSort(less);
+            Queue y = quickSort(greater);
+
+            return catenate(catenate(x,equal),y);
     }
     public static void main(String[] args){
         Queue<Integer> num = new Queue<Integer>();
-        num.enqueue(8);
-        num.enqueue(8);
-        num.enqueue(8);
-        num.enqueue(8);
-        num.enqueue(8);
+        num.enqueue(0);
+        num.enqueue(4);
+        num.enqueue(6);
+        num.enqueue(0);
+        num.enqueue(3);
 
-//        num.enqueue(1);
-//        num.enqueue(2);
-//        num.enqueue(3);
-//        num.enqueue(4);
-//        num.enqueue(5);
+        num.enqueue(2);
+        num.enqueue(7);
+        num.enqueue(7);
+        num.enqueue(7);
+        num.enqueue(8);
 
         QuickSort x = new QuickSort();
         Queue<Integer> y = new Queue<>();
