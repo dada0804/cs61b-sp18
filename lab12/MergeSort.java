@@ -65,9 +65,6 @@ public class MergeSort {
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
         Queue sortedQueue = new Queue();
-        if (q1.isEmpty() && q2.isEmpty()){
-            return null;
-        }
         while(!q1.isEmpty() || !q2.isEmpty()){
             sortedQueue.enqueue(getMin(q1, q2));
         }
@@ -77,40 +74,46 @@ public class MergeSort {
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
-        // Your code here!
-        if (items.isEmpty()){
-            return null;
+//         Your code here!
+        if (items.size() <= 1){
+            return items;
         }
-        Queue<Queue<Item>> singleItem = new Queue<>();
-        Queue sorted = new Queue();
-        singleItem = makeSingleItemQueues(items);
-        Queue q1 = singleItem.dequeue();
-        sorted = mergeSortedQueues(q1, q1);
-        while (!singleItem.isEmpty()){
-            Queue q3 = singleItem.dequeue();
-            sorted = mergeSortedQueues(sorted, q3);
+        // why make singleItemQueues --只有这样最后分开的两个合并，才能用到mergeSortedQueues
+        Queue<Queue<Item>> queues = makeSingleItemQueues(items);
+        int left = queues.size() / 2;
+        Queue<Item> leftQ = new Queue();
+        for (int i = 0; i < left; i ++){
+            // leftQ得dequeue两次的，不然leftQ就变成了Queue的Queue，就不能再继续mergeSort了
+            leftQ.enqueue(queues.dequeue().dequeue());
+        }
+        Queue rightQ = new Queue();
+        int right = queues.size();
+        for (int i = 0; i < right; i ++){
+            rightQ.enqueue(queues.dequeue().dequeue());
         }
 
-        return sorted;
+        Queue x = mergeSort(leftQ);
+        Queue y = mergeSort(rightQ);
+        return mergeSortedQueues(x, y);
     }
 
     public static void main(String[] args){
         Queue<Integer> num = new Queue<Integer>();
-//        num.enqueue(3);
-//        num.enqueue(8);
-//        num.enqueue(1);
-//        num.enqueue(7);
-//        num.enqueue(2);
-//
-//        num.enqueue(1);
-//        num.enqueue(2);
-//        num.enqueue(3);
-//        num.enqueue(4);
-//        num.enqueue(5);
+        num.enqueue(3);
+        num.enqueue(8);
+        num.enqueue(1);
+        num.enqueue(7);
+        num.enqueue(2);
+
+        num.enqueue(1);
+        num.enqueue(2);
+        num.enqueue(3);
+        num.enqueue(4);
+        num.enqueue(5);
 
         MergeSort x = new MergeSort();
         Queue<Integer> y = new Queue<>();
-        y = x.mergeSort(num);
+         y = x.mergeSort(num);
         if (y != null) {
             for (int i : y) {
                 System.out.print(i);

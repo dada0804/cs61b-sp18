@@ -80,9 +80,11 @@ public class QuickSort {
             partition(items, pivot, less, equal, greater);
             Queue x = quickSort(less);
             Queue y = quickSort(greater);
-
-            return catenate(catenate(x,equal),y);
+            items = catenate(catenate(x,equal),y);
+            return items;
     }
+
+
     public static void main(String[] args){
         Queue<Integer> num = new Queue<Integer>();
         num.enqueue(0);
