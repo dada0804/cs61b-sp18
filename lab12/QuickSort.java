@@ -1,9 +1,6 @@
 import edu.princeton.cs.algs4.Queue;
 
 public class QuickSort {
-//    Queue less = new Queue();
-//    Queue equal = new Queue();
-//    Queue greater = new Queue();
     /**
      * Returns a new queue that contains the given queues catenated together.
      *
@@ -70,7 +67,10 @@ public class QuickSort {
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
         // Your code here!
-           if (items.size() == 1){
+
+        //!!! 本来这里写的是items.size()== 1就return，会出现overflow，因为此时equal一直都等于这个值，就会一直recursion
+        //升序的也会出现问题，123，quicksort 12的话，再sort 1 返回1，然后又sort 12 ？
+           if (items.isEmpty()){
                return items;
            }
             Item pivot = getRandomItem(items);
@@ -79,17 +79,25 @@ public class QuickSort {
             Queue greater = new Queue();
             partition(items, pivot, less, equal, greater);
             items = catenate(catenate(less, equal), greater);
-            quickSort(less);
-            quickSort(greater);
+            if (!less.isEmpty() || greater.isEmpty()){
+                quickSort(less);
+                quickSort(greater);
+            }
             return items;
     }
     public static void main(String[] args){
         Queue<Integer> num = new Queue<Integer>();
-        num.enqueue(3);
         num.enqueue(8);
-        num.enqueue(1);
-        num.enqueue(7);
-        num.enqueue(2);
+        num.enqueue(8);
+        num.enqueue(8);
+        num.enqueue(8);
+        num.enqueue(8);
+
+//        num.enqueue(1);
+//        num.enqueue(2);
+//        num.enqueue(3);
+//        num.enqueue(4);
+//        num.enqueue(5);
 
         QuickSort x = new QuickSort();
         Queue<Integer> y = new Queue<>();

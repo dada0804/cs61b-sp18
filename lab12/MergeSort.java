@@ -36,6 +36,9 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
+        if (items.isEmpty()){
+            return null;
+        }
         Queue singleItem = new Queue();
         while(!items.isEmpty()){
             Queue x = new Queue();
@@ -73,7 +76,7 @@ public class MergeSort {
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        if (items == null){
+        if (items.isEmpty()){
             return null;
         }
         Queue<Queue<Item>> singleItem = new Queue<>();
@@ -91,11 +94,17 @@ public class MergeSort {
 
     public static void main(String[] args){
         Queue<Integer> num = new Queue<Integer>();
-        num.enqueue(3);
-        num.enqueue(8);
+//        num.enqueue(3);
+//        num.enqueue(8);
+//        num.enqueue(1);
+//        num.enqueue(7);
+//        num.enqueue(2);
+
         num.enqueue(1);
-        num.enqueue(7);
         num.enqueue(2);
+        num.enqueue(3);
+        num.enqueue(4);
+        num.enqueue(5);
 
         MergeSort x = new MergeSort();
         Queue<Integer> y = new Queue<>();
