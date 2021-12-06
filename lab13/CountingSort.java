@@ -1,3 +1,8 @@
+import edu.princeton.cs.algs4.MinPQ;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class with 2 ways of doing Counting sort, one naive way and one "better" way
  *
@@ -67,6 +72,37 @@ public class CountingSort {
      */
     public static int[] betterCountingSort(int[] arr) {
         // TODO make counting sort work with arrays containing negative numbers.
-        return null;
+
+        // find max
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for (int i : arr) {
+            max = max > i ? max : i;
+            min = i < min ? i : min;
+        }
+
+        int[]counts = new int[max - min + 1];
+        for (int i : arr){
+            counts[max - i] ++;
+        }
+
+        int[] start = new int[counts.length];
+        int pos = 0;
+        for (int i = 0; i < start.length; i++){
+            start[i] = pos;
+            //本来写counts[max-i]太愚蠢了！
+            pos += counts[i];
+        }
+
+        int[] sorted = new int [arr.length];
+        for (int i = 0; i < arr.length; i++){
+            int item = arr[i];
+            int place = start[max - item];
+            //如果直接写sorted[place]顺序就反了
+            sorted[arr.length-place - 1] = item;
+            start[max-item] += 1;
+        }
+
+        return sorted;
     }
 }
