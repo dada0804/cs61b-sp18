@@ -9,9 +9,10 @@ public class SeamCarver {
 
     public SeamCarver(Picture picture){
         pic = new Picture(picture);
-        width = picture.width();
-        height = picture.height();
-
+        width = pic.width();
+        height = pic.height();
+        energy = new double[width][height];
+        cal_energy();
     }
 
     public Picture picture(){
@@ -25,6 +26,7 @@ public class SeamCarver {
     public int height(){
         return height;
     }
+
 
     public double energy(int x, int y){
 
@@ -48,10 +50,6 @@ public class SeamCarver {
         if (down == height){
             down = 0;
         }
-//        int l_rgb = pic.getRGB(left, y);
-//        int r_rgb = pic.getRGB(right, y);
-//        int u_rgb = pic.getRGB(x, up);
-//        int d_rgb = pic.getRGB(x, down);
 
         Color lc = pic.get(left, y);
         Color rc = pic.get(right, y);
@@ -68,53 +66,63 @@ public class SeamCarver {
         return X_dir + Y_dir;
     }
 
+    private void cal_energy(){
+        for(int x = 0; x < width; x++){
+            for (int y = 0; y < height; y++){
+                energy[x][y] = energy(x, y);
+            }
+        }
+    }
+
     public int[] findHorizontalSeam(){
         //transpose
         Picture pic_copy = new Picture( pic);
         int new_w = height;
         int new_h = width;
         pic = new Picture(new_w, new_h);
-
-        for (int x = 0; x < width ; x ++){
-            for ( int y = 0; y < height ; y ++){
-                Color color = pic_copy.get(x, y);
-                pic.set(height -1-y, x, color);
+        double[][] energy_copy = new double[new_w][new_h];
+        for (int x = 0; x < new_w ; x ++){
+        for ( int y = 0; y < new_h ; y ++){
+                {
+                    energy_copy[x][y] = energy[y][x];
+                }
             }
         }
 
         width = new_w;
         height = new_h;
+        energy = energy_copy;
 
         //use vertical seam
         int[] path = findVerticalSeam();
 
-        //transpose back
-        int ori_w = height;
-        int ori_h = width;
 
+        //transpose back
         pic = new Picture( pic_copy);
         height = pic_copy.height();
         width = pic_copy.width();
-
+        energy = new double[width][height];
+        cal_energy();
 
         return path;
 
     }
 
+
     public int[] findVerticalSeam(){
-        energy = new double[width][height];
         // calcutate min energy cost of each pixel
+        double[][] min_energy = new double[width][height];
         for (int y = 0; y < height ; y ++){
             for ( int x = 0; x < width ; x ++){
                 if ( y == 0){
-                    energy[x][y] = energy(x, y);
+                    min_energy[x][y] = energy[x][y];
                     continue;
                 }
                 int left = x - 1;
                 int right = x + 1;
                 if (left < 0){ left = 0;}
                 if (right > width - 1) { right = width - 1;}
-                energy[x][y] = energy(x, y) + Math.min(Math.min(energy[left][y-1], energy[right][y-1]), energy[x][y-1]);
+                min_energy[x][y] = energy[x][y] + Math.min(Math.min(min_energy[left][y-1], min_energy[right][y-1]), min_energy[x][y-1]);
             }
         }
 
@@ -122,12 +130,12 @@ public class SeamCarver {
         double min = Integer.MAX_VALUE;
         int min_index = 0;
         for (int x = 0; x < width; x ++){
-            if (energy[x][height - 1] < min ){
-                min = energy[x][height - 1];
+            if (min_energy[x][height - 1] < min ){
+                min = min_energy[x][height - 1];
             }
         }
         for (int x = 0; x < width; x ++){
-            if (energy[x][height - 1] == min ){
+            if (min_energy[x][height - 1] == min ){
                 min_index = x;
             }
         }
@@ -142,19 +150,19 @@ public class SeamCarver {
             int right = min_index + 1;
             if (left < 0){ left = 0;}
             if (right > width - 1) { right = width - 1;}
-            double top_min = Math.min(Math.min(energy[left][y-1], energy[right][y-1]), energy[min_index][y-1]);
-            if (energy[left][y-1] == top_min){
+            double top_min = Math.min(Math.min(min_energy[left][y-1], min_energy[right][y-1]), min_energy[min_index][y-1]);
+            if (min_energy[left][y-1] == top_min){
                 min_index = left;
             }
-            else if (energy[right][y-1] == top_min){
+            else if (min_energy[right][y-1] == top_min){
                 min_index = right;
             }
             path[y - 1] = min_index;
         }
 
-//        for (int i = 0; i < path.length; i ++){
-//            System.out.println(path[i]);
-//        }
+        for (int i = 0; i < path.length; i ++){
+            System.out.println(path[i]);
+        }
         return path;
     }
 
