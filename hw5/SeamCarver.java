@@ -48,15 +48,15 @@ public class SeamCarver {
         if (down == height){
             down = 0;
         }
-        int l_rgb = pic.getRGB(left, y);
-        int r_rgb = pic.getRGB(right, y);
-        int u_rgb = pic.getRGB(x, up);
-        int d_rgb = pic.getRGB(x, down);
+//        int l_rgb = pic.getRGB(left, y);
+//        int r_rgb = pic.getRGB(right, y);
+//        int u_rgb = pic.getRGB(x, up);
+//        int d_rgb = pic.getRGB(x, down);
 
-        Color lc = new Color(l_rgb);
-        Color rc = new Color(r_rgb);
-        Color uc = new Color(u_rgb);
-        Color dc = new Color(d_rgb);
+        Color lc = pic.get(left, y);
+        Color rc = pic.get(right, y);
+        Color uc = pic.get(x, up);
+        Color dc = pic.get(x, down);
 
         int X_dir = (lc.getRed() - rc.getRed())*(lc.getRed() - rc.getRed())
                     + (lc.getBlue() - rc.getBlue())*(lc.getBlue() - rc.getBlue())
