@@ -48,10 +48,10 @@ public class SeamCarver {
         if (down == height){
             down = 0;
         }
-        int l_rgb = picture().getRGB(left, y);
-        int r_rgb = picture().getRGB(right, y);
-        int u_rgb = picture().getRGB(x, up);
-        int d_rgb = picture().getRGB(x, down);
+        int l_rgb = pic.getRGB(left, y);
+        int r_rgb = pic.getRGB(right, y);
+        int u_rgb = pic.getRGB(x, up);
+        int d_rgb = pic.getRGB(x, down);
 
         Color lc = new Color(l_rgb);
         Color rc = new Color(r_rgb);
@@ -85,20 +85,28 @@ public class SeamCarver {
         width = new_w;
         height = new_h;
 
-        int[] path = findVerticalSeam();
-//
-//        pic = pic_copy;
-//        width = pic_copy.width();
-//        height = pic_copy.height();
-
-
         //use vertical seam
 
 
+        int[] path = findVerticalSeam();
+
         //transpose back
-//        for (int i = 0; i < path.length; i ++){
-//            System.out.println(path[i]);
-//        }
+
+
+        int ori_w = height;
+        int ori_h = width;
+
+        pic = new Picture(ori_w, ori_h);
+        for (int x = 0; x < pic_copy.width() ; x ++){
+            for ( int y = 0; y < pic_copy.height() ; y ++){
+                Color color = pic_copy.get(x, y);
+                pic.set(x,y, color);
+            }
+        }
+        height = pic_copy.height();
+        width = pic_copy.width();
+
+
         return path;
 
     }
