@@ -3,16 +3,11 @@ import edu.princeton.cs.algs4.Picture;
 
 public class SeamCarver {
     private Picture pic;
-    private int width; //column
-    private int height; //row
     private double[][] energy;
 
     public SeamCarver(Picture picture){
         pic = new Picture(picture);
-        width = pic.width();
-        height = pic.height();
-        energy = new double[width][height];
-        cal_energy();
+        cal_energy(); // calculate energy
     }
 
     public Picture picture(){
@@ -20,16 +15,17 @@ public class SeamCarver {
     }
 
     public int width(){
-        return width;
+        return pic.width();
     }
 
     public int height(){
-        return height;
+        return pic.height();
     }
 
 
     public double energy(int x, int y){
-
+        int width = width();
+        int height = height();
         if (x > width -1 || x < 0 || y > height - 1 || y < 0){
             throw new IndexOutOfBoundsException();
         }
@@ -67,8 +63,11 @@ public class SeamCarver {
     }
 
     private void cal_energy(){
-        for(int x = 0; x < width; x++){
-            for (int y = 0; y < height; y++){
+        int width = width();
+        int height = height();
+        energy = new double[width][height];
+        for(int x = 0; x < width(); x++){
+            for (int y = 0; y < height(); y++){
                 energy[x][y] = energy(x, y);
             }
         }
@@ -76,8 +75,10 @@ public class SeamCarver {
 
     public int[] findHorizontalSeam(){
         //transpose
-        int new_w = height;
-        int new_h = width;
+        int new_w = height();
+        int new_h = width();
+        Picture pic_copy = new Picture(new_w, new_h);
+        Picture pic_temp = new Picture(pic);
         double[][] energy_copy = new double[new_w][new_h];
         double[][] temp = energy;
         for (int x = 0; x < new_w; x++) {
@@ -86,9 +87,10 @@ public class SeamCarver {
             }
         }
 
-        width = new_w;
-        height = new_h;
+//        width = new_w;
+//        height = new_h;
         energy = energy_copy;
+        pic = pic_copy;
 
         //use vertical seam
         int[] path = findVerticalSeam();
@@ -97,9 +99,11 @@ public class SeamCarver {
             path[i] = new_w - 1 -path[i];
         }
         //back
-        height = pic.height();
-        width = pic.width();
-        energy = temp;
+//        pic = picture();
+//        this.height = pic.height();
+//        this.width = pic.width();
+        this.energy = temp;
+        pic = pic_temp;
 
         return path;
 
@@ -108,6 +112,8 @@ public class SeamCarver {
 
     public int[] findVerticalSeam(){
         // calcutate min energy cost of each pixel
+        int width = width();
+        int height = height();
         double[][] min_energy = new double[width][height];
         for (int y = 0; y < height ; y ++){
             for ( int x = 0; x < width ; x ++){
@@ -161,7 +167,7 @@ public class SeamCarver {
     }
 
     public void removeHorizontalSeam(int[] seam){
-        if (seam.length != width ){
+        if (seam.length != width() ){
             throw new java.lang.IllegalArgumentException();
         }
         for ( int i = 0; i < seam.length - 1; i++){
@@ -174,7 +180,7 @@ public class SeamCarver {
     }
 
     public void removeVerticalSeam(int[] seam){
-        if (seam.length != height ){
+        if (seam.length != height() ){
             throw new java.lang.IllegalArgumentException();
         }
         for ( int i = 0; i < seam.length - 1; i++){
