@@ -3,8 +3,8 @@ import edu.princeton.cs.algs4.Picture;
 
 public class SeamCarver {
     private Picture pic;
-    private int width;
-    private int height;
+    private int width; //column
+    private int height; //row
     private double[][] energy;
 
     public SeamCarver(Picture picture){
@@ -81,11 +81,9 @@ public class SeamCarver {
         int new_h = width;
         pic = new Picture(new_w, new_h);
         double[][] energy_copy = new double[new_w][new_h];
-        for (int x = 0; x < new_w ; x ++){
-        for ( int y = 0; y < new_h ; y ++){
-                {
-                    energy_copy[x][y] = energy[y][x];
-                }
+        for (int x = 0; x < new_w; x++) {
+            for (int y = 0; y < new_h; y++) {
+                energy_copy[x][y] = energy[y][new_w-1-x];
             }
         }
 
@@ -95,6 +93,9 @@ public class SeamCarver {
 
         //use vertical seam
         int[] path = findVerticalSeam();
+        for (int i = 0; i < path.length; i++){
+            path[i] = new_w - 1 -path[i];
+        }
 
 
         //transpose back
