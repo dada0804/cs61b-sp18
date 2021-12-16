@@ -16,7 +16,7 @@ public class SeamCarver {
     }
 
     public Picture picture(){
-        return pic;
+        return new Picture(pic);
     }
 
     public int width(){
@@ -76,11 +76,10 @@ public class SeamCarver {
 
     public int[] findHorizontalSeam(){
         //transpose
-        Picture pic_copy = new Picture( pic);
         int new_w = height;
         int new_h = width;
-        pic = new Picture(new_w, new_h);
         double[][] energy_copy = new double[new_w][new_h];
+        double[][] temp = energy;
         for (int x = 0; x < new_w; x++) {
             for (int y = 0; y < new_h; y++) {
                 energy_copy[x][y] = energy[y][new_w-1-x];
@@ -93,17 +92,14 @@ public class SeamCarver {
 
         //use vertical seam
         int[] path = findVerticalSeam();
+        //transpose back
         for (int i = 0; i < path.length; i++){
             path[i] = new_w - 1 -path[i];
         }
-
-
-        //transpose back
-        pic = new Picture( pic_copy);
-        height = pic_copy.height();
-        width = pic_copy.width();
-        energy = new double[width][height];
-        cal_energy();
+        //back
+        height = pic.height();
+        width = pic.width();
+        energy = temp;
 
         return path;
 
