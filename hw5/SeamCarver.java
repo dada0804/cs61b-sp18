@@ -161,9 +161,6 @@ public class SeamCarver {
             path[y - 1] = min_index;
         }
 
-        for (int i = 0; i < path.length; i ++){
-            System.out.println(path[i]);
-        }
         return path;
     }
 
@@ -176,7 +173,7 @@ public class SeamCarver {
                 throw new java.lang.IllegalArgumentException();
             }
         }
-        removeHorizontalSeam(seam);
+        pic = SeamRemover.removeHorizontalSeam(pic, seam);
 
     }
 
@@ -189,7 +186,7 @@ public class SeamCarver {
                 throw new java.lang.IllegalArgumentException();
             }
         }
-        removeHorizontalSeam(seam);
+        pic = SeamRemover.removeVerticalSeam(pic, seam);
 
     }
 
